@@ -1,47 +1,53 @@
-import React from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import s from './InputField.module.css';
 
 
-export class InputField extends React.Component {
-  state = {
-    name: '',
-    number: '',
+export const InputField =({contacts, updateContactState}) => {
+const [name, setName] = useState('');
+const [number, setNumber] = useState('');
+ 
+const  handleValueChange = (field, event) => {
+    switch (field) {
+      case 'number':
+        setNumber(event.target.value)
+        break;
+    
+        case 'name':
+          setName(event.target.value)
+        break;
+      default:
+        break;
+    }
   };
 
-  handleValueChange = (field, event) => {
-    this.setState({ [field]: event.target.value });
-  };
-
-  createContact = event => {
+const  createContact = event => {
     event.preventDefault();
-
-    const { name, number } = this.state;
 
     const newContact = { name, number, id: nanoid(5) };
 
-    if (this.props.contacts.some(contact => contact.name === name)) {
+    if (contacts.some(contact => contact.name === name)) {
       alert(`Contact with the name ${name} already exists!`);
       return;
     }
 
-    this.props.updateContactState(newContact);
+    updateContactState(newContact);
 
-    this.setState({ name: '', number: '' });
+    setNumber('');
+    setName('');
   };
 
-  render() {
     return (
-      <form className={s.formInput} onSubmit={this.createContact}>
+      <form className={s.formInput} onSubmit={createContact}>
         <label className={s.nameLabel}>
           Name <br />
           <input
           className={s.nameInput}
             name="name"
-            value={this.state.name}
+            value={name}
             type="text"
             placeholder='Enter contact name'
-            onChange={event => this.handleValueChange('name', event)}
+            onChange={event => handleValueChange('name', event)}
           />
         </label>
 
@@ -50,15 +56,14 @@ export class InputField extends React.Component {
           <input
           className={s.numberInput}
             name="number"
-            value={this.state.number}
+            value={number}
             type="tel"
             placeholder='Enter contact number'
-            onChange={event => this.handleValueChange('number', event)}
+            onChange={event => handleValueChange('number', event)}
             required
           />
         </label>
         <button className={s.searchBTN} type="submit">Add contact</button>
       </form>
     );
-  }
 }

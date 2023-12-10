@@ -1,9 +1,7 @@
-import React from 'react';
 import s from './SearchFilter.module.css';
 
-export class SearchFilter extends React.Component {
-  render() {
-    const { filterState, changeFilter } = this.props;
+export const SearchFilter = ({ filterState, changeFilter }) => {
+ 
     return (
       <label className={s.searchLabel}>
         Find contacts by name
@@ -16,5 +14,5 @@ export class SearchFilter extends React.Component {
         />
       </label>
     );
-  }
+
 }
