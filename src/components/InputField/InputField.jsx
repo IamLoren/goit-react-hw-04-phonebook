@@ -7,18 +7,13 @@ export const InputField =({contacts, updateContactState}) => {
 const [name, setName] = useState('');
 const [number, setNumber] = useState('');
  
-const  handleValueChange = (field, event) => {
-    switch (field) {
-      case 'number':
-        setNumber(event.target.value)
-        break;
-    
-        case 'name':
-          setName(event.target.value)
-        break;
-      default:
-        break;
-    }
+const  handleValueChange = (event) => {
+  if (event.target.name === 'number') {
+    setNumber(event.target.value)
+  }
+  if (event.target.name === 'name') {
+    setName(event.target.value)
+  }
   };
 
 const  createContact = event => {
@@ -47,7 +42,7 @@ const  createContact = event => {
             value={name}
             type="text"
             placeholder='Enter contact name'
-            onChange={event => handleValueChange('name', event)}
+            onChange={handleValueChange}
           />
         </label>
 
@@ -59,7 +54,7 @@ const  createContact = event => {
             value={number}
             type="tel"
             placeholder='Enter contact number'
-            onChange={event => handleValueChange('number', event)}
+            onChange={handleValueChange}
             required
           />
         </label>
